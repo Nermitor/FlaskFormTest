@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>Register Form</h3>
+        <form method="post" novalidate>
+            <div>
+                {{ form.hidden_tag() }}
+            </div>
+            {% for field in form if field.name != "csrf_token" %}
+                <div class="form-group register-form-field">
+                    {% if field.name != "submit" %}
+                        {{ field.label() }}
+                        {{ field(class="form-control {% if field.name == 'password' or field.name == 'repeat_password' %}type='passsword'{% endif %}") }}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {{ form.submit(type="submit", class="btn btn-primary") }}
+            {% if message %}
+                {{ message }}
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}
